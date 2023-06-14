@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/parent"
     android:layout_height="match_parent"
     android:background="@color/black"
     android:paddingTop="60dp">
@@ -32,36 +33,79 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/inp1"
         android:background="@drawable/rectangle"
+        android:gravity="center"
+        android:maxLength="1"
+        android:textSize="10dp"
         android:layout_width="35dp"
         android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
         <com.google.android.material.textfield.TextInputEditText
             android:layout_toRightOf="@+id/inp1"
             android:id="@+id/inp2"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="10dp"
             android:background="@drawable/rectangle"
             android:layout_width="35dp"
             android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
         <com.google.android.material.textfield.TextInputEditText
             android:layout_toRightOf="@+id/inp2"
             android:id="@+id/inp3"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="10dp"
             android:background="@drawable/rectangle"
             android:layout_width="35dp"
             android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
         <com.google.android.material.textfield.TextInputEditText
             android:layout_toRightOf="@+id/inp3"
             android:id="@+id/inp4"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="10dp"
             android:background="@drawable/rectangle"
             android:layout_width="35dp"
             android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
         <com.google.android.material.textfield.TextInputEditText
             android:layout_toRightOf="@+id/inp4"
             android:id="@+id/inp5"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="10dp"
             android:background="@drawable/rectangle"
             android:layout_width="35dp"
             android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inp6"
             android:layout_toRightOf="@+id/inp5"
+            android:gravity="center"
+            android:maxLength="1"
+            android:textSize="10dp"
             android:background="@drawable/rectangle"
             android:layout_width="35dp"
             android:layout_height="55dp"></com.google.android.material.textfield.TextInputEditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/rel">
+    <Button android:layout_width="150dp"
+        android:id="@+id/verify"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="Verify">
+    </Button>
+    <Button
+        android:id="@+id/resetOTP"
+        android:layout_width="150dp"
+        android:layout_margin="10dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/verify"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="Reset OTP">
+    </Button>
     </RelativeLayout>
 </RelativeLayout>

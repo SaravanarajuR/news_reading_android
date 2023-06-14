@@ -22,7 +22,6 @@ public class login extends AppCompatActivity {
     TextInputEditText t1;
     TextInputEditText t2;
     Button b;
-    Button b2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         FirebaseAuth mAuth;
@@ -33,7 +32,6 @@ public class login extends AppCompatActivity {
         t1=findViewById(R.id.inp1);
         t2=findViewById(R.id.inp2);
         b=findViewById(R.id.sub);
-        b2=findViewById(R.id.red);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,32 +39,17 @@ public class login extends AppCompatActivity {
                 String phone=String.valueOf(t1.getText());
                 String pass =String.valueOf(t2.getText());
                 if(TextUtils.isEmpty(phone)){
-                    Toast.makeText(login.this, "Email cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login.this, "Phone Number cannot be empty", Toast.LENGTH_SHORT).show();
                 }
-                if(TextUtils.isEmpty(pass)){
+                else if(TextUtils.isEmpty(pass)){
                     Toast.makeText(login.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent j = new Intent(getApplicationContext(), otp.class);
+                    j.putExtra("phone", phone);
+                    j.putExtra("pass", pass);
+                    startActivity(j);
                 }
-                mAuth.signInWithEmailAndPassword(phone, pass)
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(login.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
             }
         });
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),register.class);
-                startActivity(i);
-            }
-        });
-
     }
 }

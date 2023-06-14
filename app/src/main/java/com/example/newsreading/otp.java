@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,33 +30,50 @@ public class otp extends AppCompatActivity {
     private Button verifyOTPBtn, generateOTPBtn;
     private String verificationId;
     String phone,pass;
+    String enteredCode;
+    TextInputEditText n1;
+    TextInputEditText n2;
+    TextInputEditText n3;
+    TextInputEditText n4;
+    TextInputEditText n5;
+    TextInputEditText n6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i=new Intent();
-        phone=i.getStringExtra("phone");
-        pass=i.getStringExtra("pass");
+        Bundle i=getIntent().getExtras();
+        phone=i.getString("phone");
+        pass=i.getString("pass");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
         mAuth = FirebaseAuth.getInstance();
+        n1=findViewById(R.id.inp1);
+        n2=findViewById(R.id.inp2);
+        n3=findViewById(R.id.inp3);
+        n4=findViewById(R.id.inp4);
+        n5=findViewById(R.id.inp5);
+        n6=findViewById(R.id.inp6);
+        verifyOTPBtn=findViewById(R.id.verify);
+        generateOTPBtn=findViewById(R.id.resetOTP);
 
         generateOTPBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(phone)) {
+                if (phone=="") {
                     Toast.makeText(otp.this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show();
                 } else {
-                    sendVerificationCode('+91'+phone);
+                    String PhoneNumber="+91"+phone;
+                    sendVerificationCode(PhoneNumber);
                 }
             }
         });
         verifyOTPBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(edtOTP.getText().toString())) {
+                enteredCode =n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
+                if (enteredCode.length()<6) {
                     Toast.makeText(otp.this, "Please enter OTP", Toast.LENGTH_SHORT).show();
                 } else {
-                    verifyCode(edtOTP.getText().toString());
+                            verifyCode(enteredCode);
                 }
             }
         });
@@ -67,7 +85,7 @@ public class otp extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent(MainActivity.this, login.class);
+                            Intent i = new Intent(otp.this, login.class);
                             startActivity(i);
                             finish();
                         } else {
@@ -96,18 +114,18 @@ public class otp extends AppCompatActivity {
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            Toast.makeText(otp.this, "code sent", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
             final String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
-                edtOTP.setText(code);
                 verifyCode(code);
             }
         }
         @Override
-        public void onVerificationFailed(FirebaseException e) {
-            // displaying error message with firebase exception.
+        public void onVerificationFailed(FirebaseException e)
+        {
             Toast.makeText(otp.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
