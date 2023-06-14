@@ -51,18 +51,10 @@ public class register extends AppCompatActivity {
                     Toast.makeText(register.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
                 }
                 if(TextUtils.equals(pass,cpass)) {
-                    mAuth.createUserWithEmailAndPassword(phone, pass)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(register.this, "Account Created", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(register.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    Intent j=new Intent(getApplicationContext(),otp.class);
+                    j.putExtra("phone",phone);
+                    j.putExtra("pass",pass);
+                    startActivity(j);
                 }else{
                     Toast.makeText(register.this, "Password doesn't match", Toast.LENGTH_SHORT).show();
                 }
