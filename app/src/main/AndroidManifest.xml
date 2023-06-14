@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Newsreading"
         tools:targetApi="31">
         <activity
-            android:name=".register"
+            android:name=".login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".login"
+            android:name=".register"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -34,11 +34,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
