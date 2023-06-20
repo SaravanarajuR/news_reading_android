@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -27,29 +28,31 @@ public class login extends AppCompatActivity {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
-        t1=findViewById(R.id.inp1);
-        t2=findViewById(R.id.inp2);
-        b=findViewById(R.id.sub);
+        t1 = findViewById(R.id.inp1);
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Intent i = new Intent(getApplicationContext(), chooseInterest.class);
+            startActivity(i);
+        } else {
+            b = findViewById(R.id.sub);
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone=String.valueOf(t1.getText());
-                String pass =String.valueOf(t2.getText());
-                if(TextUtils.isEmpty(phone)){
-                    Toast.makeText(login.this, "Phone Number cannot be empty", Toast.LENGTH_SHORT).show();
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phone = String.valueOf(t1.getText());
+                    if (TextUtils.isEmpty(phone)) {
+                        Toast.makeText(login.this, "Phone Number cannot be empty", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent j = new Intent(getApplicationContext(), otp.class);
+                        j.putExtra("phone", phone);
+                        startActivity(j);
+                    }
                 }
-                else if(TextUtils.isEmpty(pass)){
-                    Toast.makeText(login.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent j = new Intent(getApplicationContext(), otp.class);
-                    j.putExtra("phone", phone);
-                    j.putExtra("pass", pass);
-                    startActivity(j);
-                }
-            }
-        });
+            });
+        }
     }
 }

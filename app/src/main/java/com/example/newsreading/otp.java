@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,8 +42,9 @@ public class otp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle i=getIntent().getExtras();
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
         phone=i.getString("phone");
-        pass=i.getString("pass");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
         mAuth = FirebaseAuth.getInstance();
@@ -53,19 +55,14 @@ public class otp extends AppCompatActivity {
         n5=findViewById(R.id.inp5);
         n6=findViewById(R.id.inp6);
         verifyOTPBtn=findViewById(R.id.verify);
-        generateOTPBtn=findViewById(R.id.resetOTP);
 
-        generateOTPBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (phone=="") {
                     Toast.makeText(otp.this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show();
                 } else {
                     String PhoneNumber="+91"+phone;
                     sendVerificationCode(PhoneNumber);
                 }
-            }
-        });
+
         verifyOTPBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +82,7 @@ public class otp extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent i = new Intent(otp.this, login.class);
+                            Intent i = new Intent(otp.this, chooseInterest.class);
                             startActivity(i);
                             finish();
                         } else {
