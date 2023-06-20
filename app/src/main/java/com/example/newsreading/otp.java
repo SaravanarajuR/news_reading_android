@@ -63,6 +63,7 @@ public class otp extends AppCompatActivity {
                     sendVerificationCode(PhoneNumber);
                 }
 
+
         verifyOTPBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
