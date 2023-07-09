@@ -51,7 +51,7 @@ public class login extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
-        mAuth.signOut();
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             dr=db.collection("user").document(FirebaseAuth.getInstance().getUid());
