@@ -13,7 +13,7 @@
         android:fontFamily="@font/gabriela"
         android:gravity="center"
         android:text="User Details"
-        android:textColor="@color/white"
+        android:textColor="@color/lviolet"
         android:textSize="40dp"
         android:textStyle="bold"></TextView>
     <EditText
@@ -40,7 +40,7 @@
         android:fontFamily="@font/gabriela"
         android:gravity="center"
         android:text="Choose your favourites"
-        android:textColor="@color/white"
+        android:textColor="@color/lviolet"
         android:textSize="25dp"
         android:textStyle="bold"></TextView>
     <RelativeLayout
@@ -242,12 +242,12 @@
     </RelativeLayout>
     <Button
         android:id="@+id/finish"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:textStyle="bold"
         android:layout_width="220dp"
         android:layout_below="@+id/rel"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/lviolet"
         android:layout_height="50dp"
         android:text="Finish set up"></Button>
 </RelativeLayout>

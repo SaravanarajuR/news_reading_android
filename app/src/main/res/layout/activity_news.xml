@@ -104,13 +104,14 @@
             android:scrollbarStyle="outsideInset"
             android:scrollbarThumbVertical="@color/violet"
             android:layout_height="wrap_content">
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/newsArea"
             android:background="#5A5A5A"
             android:foreground="@drawable/rectangle"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            ></RelativeLayout>
+            ></LinearLayout>
         </ScrollView>
     </RelativeLayout>
 </RelativeLayout>

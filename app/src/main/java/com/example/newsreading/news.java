@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.AsyncListUtil;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,8 +52,9 @@ public class news extends AppCompatActivity {
     int newsno=0;
     int prevId=0;
     String nextPage;
-    RelativeLayout parent;
+    LinearLayout parent;
     String url;
+    HashMap<String,JSONObject> newsmap=new HashMap<>();
     int page=1;
     ArrayList user, favs = new ArrayList();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -84,10 +86,16 @@ public class news extends AppCompatActivity {
 
     public void handleNews(View v) {
         int head[] = {R.id.head1, R.id.head2, R.id.head3};
+        parent=findViewById(R.id.newsArea);
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            View childView = parent.getChildAt(i);
+            childView.setId(View.NO_ID);
+        }
+        newsmap.clear();
+        parent.removeAllViews();
+        newsno=0;
         for (int i = 0; i < favs.size(); i++) {
             if (v.getId() == head[i]) {
-                parent=findViewById(R.id.newsArea);
-                parent.removeAllViews();
                 if(nextPage!=null) {
                     url = "https://newsdata.io/api/1/news?apikey=pub_259641873c377e643bcad2a3c456e3eda9486&q=" + favs.get(i).toString() + "&language=en&page="+nextPage;
                 }else{
@@ -103,7 +111,7 @@ public class news extends AppCompatActivity {
                             for (int i = 0; i < results.length(); i++) {
                                 try {
                                     JSONObject js=results.getJSONObject(i);
-                                    handleRender(js.getString("title"),js.getString("image_url"));
+                                    handleRender(js.getString("title"),js.getString("image_url"),js);
                                    } catch (Exception e) {
                                     Log.d("error", e.toString());
                                 }
@@ -124,20 +132,34 @@ public class news extends AppCompatActivity {
         }
     }
 
-    public void handleRender(String title,String image){
+    public void handleRender(String title,String image,JSONObject js){
             RelativeLayout rl=new RelativeLayout(this);
             RelativeLayout.LayoutParams param=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-            int rid=View.generateViewId();
+            int rid=newsno;
+            rl.setId(rid);
+            newsmap.put(String.valueOf(rid),js);
             rl.setHorizontalGravity(Gravity.CENTER);
             param.bottomMargin=20;
             rl.setBackgroundColor(Color.argb(100,90,90,90));
+            rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        JSONObject allnews = newsmap.get(String.valueOf(v.getId()));
+                        Intent i=new Intent(news.this,selectedNews.class);
+                        i.putExtra("title",allnews.getString("title"));
+                        i.putExtra("content",allnews.getString("content"));
+                        i.putExtra("image",allnews.getString("image_url"));
+                        i.putExtra("description",allnews.getString("description"));
+                        startActivity(i);
+                    }catch(Exception e){
+                        Log.d("error getting news",e.getMessage());
+                    }
+                }
+            });
             parent.setBackgroundColor(Color.argb(100,0,0,0));
             rl.setPadding(20,30,20,30);
-            rl.setId(rid);
-            if(prevId!=0){
-                param.addRule(RelativeLayout.BELOW,prevId);
-            }
-            prevId=rid;
+
 
             ImageView img = new ImageView(this);
             RelativeLayout.LayoutParams imageParam=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -168,6 +190,9 @@ public class news extends AppCompatActivity {
             rl.addView(img);
             rl.setLayoutParams(param);
             parent.addView(rl);
-            newsno++;
+            newsno+=1;
+    }
+
+    public void handleSelected(int newsIndex){
     }
 }
