@@ -2,61 +2,94 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@color/darknavy"
     android:id="@+id/newsparent">
+    <TextView
+        android:text="Explore"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:fontFamily="@font/gabriela"
+        android:textColor="@color/white"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:id="@+id/explore"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    </TextView>
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginVertical="20dp"
+        android:textSize="10dp"
+        android:text="Logout"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"></Button>
+    <RelativeLayout
+        android:layout_below="@+id/explore"
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:layout_marginRight="10dp"
+            android:id="@+id/searchbar"
+            android:layout_width="250dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/rectangle"
+            android:layout_height="40dp"></EditText>
+            <Button
+                android:layout_toRightOf="@+id/searchbar"
+                android:id="@+id/button"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gabriela"
+                android:text="search"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/rectangle"
+                android:layout_width="100dp"
+                android:layout_height="40dp"></Button>
+        </RelativeLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/nav"
-        android:backgroundTint="@color/violet"
+        android:layout_below="@+id/search"
+        android:backgroundTint="@color/darknavy"
         android:layout_width="match_parent"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="30dp"
         android:layout_marginHorizontal="10dp"
         android:background="@drawable/rectangle"
-        android:layout_height="170dp">
-        <ImageView
-            android:padding="4dp"
-            android:id="@+id/profile"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/circle"
-            android:src="@drawable/profile"
-            android:maxWidth="60dp"
-            android:maxHeight="60dp"
-            android:backgroundTint="#BEBEBE"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"></ImageView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:visibility="gone"
-            >
-
-        </androidx.cardview.widget.CardView>
-    <HorizontalScrollView
+        android:layout_height="120dp">
+        <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
+            android:layout_centerVertical="true"
         android:scrollbars="none"
-        android:layout_marginHorizontal="10dp"
-        android:layout_height="30dp">
+            android:layout_centerHorizontal="true"
+        android:layout_height="120dp">
        <LinearLayout
            android:layout_width="wrap_content"
            android:layout_height="match_parent">
            <TextView
-               android:background="@color/black"
-               android:textColor="@color/white"
+               android:textColor="@color/black"
                android:fontFamily="@font/gabriela"
                android:gravity="center"
+               android:background="@drawable/rectangle"
                android:layout_marginRight="2dp"
                android:id="@+id/head1"
+               android:backgroundTint="@color/white"
                android:layout_width="120dp"
                android:onClick="handleNews"
                android:layout_height="match_parent"></TextView>
            <TextView
-               android:background="@color/black"
+               android:background="@drawable/rectangle"
+               android:backgroundTint="@color/white"
                android:id="@+id/head2"
-               android:textColor="@color/white"
+               android:textColor="@color/black"
                android:gravity="center"
                android:fontFamily="@font/gabriela"
                android:layout_marginHorizontal="2dp"
@@ -64,9 +97,10 @@
                android:layout_width="120dp"
                android:layout_height="match_parent"></TextView>
            <TextView
-               android:background="@color/black"
+               android:background="@drawable/rectangle"
+               android:backgroundTint="@color/white"
                android:id="@+id/head3"
-               android:textColor="@color/white"
+               android:textColor="@color/black"
                android:fontFamily="@font/gabriela"
                android:onClick="handleNews"
                android:gravity="center"
@@ -77,24 +111,8 @@
     </HorizontalScrollView>
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_below="@+id/nav"
-        android:backgroundTint="@color/violet"
-        android:background="@drawable/rectangle"
-        android:layout_marginHorizontal="10dp"
-        android:layout_height="wrap_content">
-    <SearchView
-        android:layout_width="300dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/rectangle"
-        android:layout_height="30dp">
-    </SearchView>
-</RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_below="@+id/search"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp"
         android:layout_height="wrap_content">
@@ -102,12 +120,13 @@
             android:layout_width="match_parent"
             android:scrollbarSize="7dp"
             android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbVertical="@color/violet"
+            android:scrollbarThumbVertical="@color/white"
             android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/newsArea"
             android:background="#5A5A5A"
             android:foreground="@drawable/rectangle"
+            android:backgroundTint="@color/black"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

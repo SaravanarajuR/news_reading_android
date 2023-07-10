@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Newsreading"
         tools:targetApi="31">
         <activity
+            android:name=".login"
+            android:exported="false" />
+        <activity
             android:name=".selectedNews"
             android:exported="false" />
         <activity
@@ -24,7 +27,7 @@
             android:name=".chooseInterest"
             android:exported="false" />
         <activity
-            android:name=".login"
+            android:name=".intro"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

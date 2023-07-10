@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,6 +53,7 @@ public class news extends AppCompatActivity {
     int newsno=0;
     int prevId=0;
     String nextPage;
+    Button lo;
     LinearLayout parent;
     String url;
     HashMap<String,JSONObject> newsmap=new HashMap<>();
@@ -80,6 +82,16 @@ public class news extends AppCompatActivity {
                     tv = findViewById(head[i]);
                     tv.setText(favs.get(i).toString());
                 }
+            }
+        });
+
+        lo=findViewById(R.id.logout);
+        lo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent i=new Intent(getApplicationContext(),login.class);
+                startActivity(i);
             }
         });
     }
@@ -149,6 +161,7 @@ public class news extends AppCompatActivity {
                         Intent i=new Intent(news.this,selectedNews.class);
                         i.putExtra("title",allnews.getString("title"));
                         i.putExtra("content",allnews.getString("content"));
+                        Log.d("image",allnews.getString("content"));
                         i.putExtra("image",allnews.getString("image_url"));
                         i.putExtra("description",allnews.getString("description"));
                         startActivity(i);
@@ -193,6 +206,4 @@ public class news extends AppCompatActivity {
             newsno+=1;
     }
 
-    public void handleSelected(int newsIndex){
-    }
 }

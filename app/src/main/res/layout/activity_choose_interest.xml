@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="40dp"
     android:layout_height="match_parent"
-    android:background="#000">
+    android:background="@color/darknavy">
 
     <TextView
         android:id="@+id/toptext"
@@ -13,7 +13,7 @@
         android:fontFamily="@font/gabriela"
         android:gravity="center"
         android:text="User Details"
-        android:textColor="@color/lviolet"
+        android:textColor="@color/white"
         android:textSize="40dp"
         android:textStyle="bold"></TextView>
     <EditText
@@ -40,7 +40,7 @@
         android:fontFamily="@font/gabriela"
         android:gravity="center"
         android:text="Choose your favourites"
-        android:textColor="@color/lviolet"
+        android:textColor="@color/white"
         android:textSize="25dp"
         android:textStyle="bold"></TextView>
     <RelativeLayout

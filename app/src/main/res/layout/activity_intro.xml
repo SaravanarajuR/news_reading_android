@@ -1,0 +1,45 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/darknavy"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rel"
+        android:layout_marginBottom="30dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/logo"
+            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/circle"
+            android:src="@drawable/newslogo"></ImageView>
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="NewSphere"
+            android:textFontWeight="900"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:fontFamily="@font/gabriela"
+            android:layout_below="@+id/logo"></TextView>
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Be Informed. Be Inspired. Be Connected."
+            android:textFontWeight="900"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            android:fontFamily="@font/gabriela"
+            android:layout_below="@+id/name"></TextView>
+    </RelativeLayout>
+</RelativeLayout>

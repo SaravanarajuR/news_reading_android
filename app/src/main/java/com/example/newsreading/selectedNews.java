@@ -12,6 +12,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.net.URLDecoder;
 import java.text.Normalizer;
 
@@ -41,7 +43,7 @@ public class selectedNews extends AppCompatActivity {
             newstitle=findViewById(R.id.title);
             newsdesc=findViewById(R.id.desc);
             newscontent=findViewById(R.id.content);
-            imageArea.setImageURI(Uri.parse(image));
+            Picasso.with(this).load(image).into(imageArea);
             newstitle.setText(title);
             newsdesc.setText(description);
             newscontent.setText(content);
