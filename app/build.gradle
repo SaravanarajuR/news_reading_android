@@ -30,6 +30,8 @@ android {
 }
 
 dependencies {
+    implementation "io.github.coordinates2country:coordinates2country:1.2"
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'androidx.browser:browser:1.5.0'
     implementation 'com.google.firebase:firebase-appcheck-playintegrity'

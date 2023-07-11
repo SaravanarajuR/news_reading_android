@@ -7,10 +7,11 @@
     <TextView
         android:text="Explore"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:fontFamily="@font/gabriela"
         android:textColor="@color/white"
-        android:layout_marginVertical="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="20dp"
         android:id="@+id/explore"
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
         android:layout_marginVertical="20dp"
         android:textSize="10dp"
         android:text="Logout"
@@ -30,83 +32,57 @@
         android:layout_below="@+id/explore"
         android:id="@+id/search"
         android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
         android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content">
         <EditText
+            android:paddingHorizontal="20dp"
             android:layout_marginRight="10dp"
             android:id="@+id/searchbar"
+            android:layout_centerVertical="true"
             android:layout_width="250dp"
+            android:textColor="@color/white"
             android:backgroundTint="@color/white"
             android:background="@drawable/rectangle"
             android:layout_height="40dp"></EditText>
             <Button
                 android:layout_toRightOf="@+id/searchbar"
                 android:id="@+id/button"
-                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
                 android:fontFamily="@font/gabriela"
                 android:text="search"
                 android:backgroundTint="@color/white"
-                android:background="@drawable/rectangle"
                 android:layout_width="100dp"
-                android:layout_height="40dp"></Button>
+                android:layout_height="50dp"></Button>
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/nav"
         android:layout_below="@+id/search"
-        android:backgroundTint="@color/darknavy"
-        android:layout_width="match_parent"
-        android:layout_marginVertical="30dp"
-        android:layout_marginHorizontal="10dp"
-        android:background="@drawable/rectangle"
-        android:layout_height="120dp">
+        android:layout_width="wrap_content"
+        android:background="@color/darknavy"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_height="350px">
         <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+            android:scrollbarSize="4dp"
+            android:scrollIndicators="bottom"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbHorizontal="@color/white"
             android:layout_centerVertical="true"
-        android:scrollbars="none"
             android:layout_centerHorizontal="true"
-        android:layout_height="120dp">
+        android:layout_height="350px">
        <LinearLayout
-           android:layout_width="wrap_content"
+           android:id="@+id/ll"
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
            android:layout_height="match_parent">
-           <TextView
-               android:textColor="@color/black"
-               android:fontFamily="@font/gabriela"
-               android:gravity="center"
-               android:background="@drawable/rectangle"
-               android:layout_marginRight="2dp"
-               android:id="@+id/head1"
-               android:backgroundTint="@color/white"
-               android:layout_width="120dp"
-               android:onClick="handleNews"
-               android:layout_height="match_parent"></TextView>
-           <TextView
-               android:background="@drawable/rectangle"
-               android:backgroundTint="@color/white"
-               android:id="@+id/head2"
-               android:textColor="@color/black"
-               android:gravity="center"
-               android:fontFamily="@font/gabriela"
-               android:layout_marginHorizontal="2dp"
-               android:onClick="handleNews"
-               android:layout_width="120dp"
-               android:layout_height="match_parent"></TextView>
-           <TextView
-               android:background="@drawable/rectangle"
-               android:backgroundTint="@color/white"
-               android:id="@+id/head3"
-               android:textColor="@color/black"
-               android:fontFamily="@font/gabriela"
-               android:onClick="handleNews"
-               android:gravity="center"
-               android:layout_marginHorizontal="2dp"
-               android:layout_width="120dp"
-               android:layout_height="match_parent"></TextView>
        </LinearLayout>
     </HorizontalScrollView>
     </RelativeLayout>
@@ -114,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_below="@+id/nav"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content">
         <ScrollView
             android:layout_width="match_parent"
@@ -124,9 +100,8 @@
             android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/newsArea"
-            android:background="#5A5A5A"
-            android:foreground="@drawable/rectangle"
-            android:backgroundTint="@color/black"
+            android:foreground="@drawable/smallrect"
+            android:backgroundTint="@color/darknavy"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

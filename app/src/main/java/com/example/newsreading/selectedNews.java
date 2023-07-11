@@ -24,9 +24,9 @@ public class selectedNews extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_selected_news);
         Intent i =getIntent();
-        Log.d("data",i.getStringExtra("content"));
         image=i.getStringExtra("image");
         title=i.getStringExtra("title");
         description=i.getStringExtra("description");
