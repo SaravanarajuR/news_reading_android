@@ -1,5 +1,6 @@
 package com.example.newsreading;
 
+import static com.example.newsreading.R.font.arbutus;
 import static com.google.android.material.internal.ContextUtils.getActivity;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -9,14 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.AsyncListUtil;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.fonts.Font;
+import android.graphics.fonts.FontFamily;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -35,8 +41,11 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import com.android.volley.Response;
@@ -52,6 +61,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -73,6 +84,7 @@ public class news extends AppCompatActivity {
     double latitude,longitude;
     String userLocation,key;
     LinearLayout parent;
+    boolean menu=FALSE;
 
 
     HashMap<String, JSONObject> newsmap = new HashMap<>();
@@ -91,6 +103,8 @@ public class news extends AppCompatActivity {
         fusedlocation = LocationServices.getFusedLocationProviderClient(this);
         search=findViewById(R.id.button);
         searchBar=findViewById(R.id.searchbar);
+        LinearLayout ll=findViewById(R.id.ll);
+        ll.removeAllViews();
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,34 +115,26 @@ public class news extends AppCompatActivity {
                 }
             }
         });
-        dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                TextView tv;
-                DocumentSnapshot ss = task.getResult();
-                Object userData = ss.get("uname");
-                Object fav = ss.get("favs");
-                user = (ArrayList) userData;
-                favs = (ArrayList) fav;
-                LinearLayout ll;
-                ll=findViewById(R.id.ll);
-                ll.removeAllViews();
-                favs.addAll(new Categories().getData());
-                for (int i = 0; i < favs.size(); i++) {
-                    CreateElement element=new CreateElement(favs.get(i).toString());
-                    RelativeLayout t=element.create(news.this);
-                    t.setId(i+2000);
-                    t.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            handleNews(v);
-                        }
-                    });
-                    ll.addView(t);
-                }
+        TextView uname=findViewById(R.id.username);
+        uname.setText(getIntent().getStringExtra("uname"));
+        HashMap<String,String> attributes= (HashMap<String, String>) getIntent().getSerializableExtra("urls");
+                int i=0;
+                                for (final Map.Entry<String, String> entry : attributes.entrySet()) {
+                                            CreateElement element = new CreateElement(news.this);
+                                            LinearLayout t;
+                                            Log.d("data",String.valueOf(i));
+                                            t = element.create(entry.getKey(), entry.getValue());
+                                            t.setId(i + 1000);
+                                            i=i+1;
+                                            t.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    handleNews(v);
+                                                }
+                                            });
+                                            ll.addView(t);
+                                        }
                 locationPermission();
-            }
-        });
 
         lo = findViewById(R.id.logout);
         lo.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +143,7 @@ public class news extends AppCompatActivity {
                 mAuth.signOut();
                 Intent i = new Intent(getApplicationContext(), login.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -152,21 +159,27 @@ public class news extends AppCompatActivity {
         parent.removeAllViews();
         newsno = 0;
         if(start){
-            url = "https://newsdata.io/api/1/news?apikey=pub_259641873c377e643bcad2a3c456e3eda9486&language=en&country="+userLocation;
+            if(userLocation!=null) {
+                url = "https://newsdata.io/api/1/news?apikey=pub_245202fcd86c96f9e3b071c742384f2e8aef0&language=en&country=" + userLocation;
+            }else{
+                url = "https://newsdata.io/api/1/news?apikey=pub_245202fcd86c96f9e3b071c742384f2e8aef0&language=en&q=headline";
+
+            }
         }
         if(searchNews){
-            url = "https://newsdata.io/api/1/news?apikey=pub_259641873c377e643bcad2a3c456e3eda9486&qInTitle="+key+"&language=en";
+            url = "https://newsdata.io/api/1/news?apikey=pub_245202fcd86c96f9e3b071c742384f2e8aef0&qInTitle="+key+"&language=en";
         }
                 if (v!=null) {
-                    RelativeLayout p=findViewById(v.getId());
+                    LinearLayout p=findViewById(v.getId());
                     View child=p.getChildAt(1);
                     TextView childText=findViewById(child.getId());
                     String text=childText.getText().toString();
+                    Log.d("view",text);
                     if(!start && !searchNews) {
                         if (nextPage != null) {
-                            url = "https://newsdata.io/api/1/news?apikey=pub_259641873c377e643bcad2a3c456e3eda9486&qInTitle=" + text+ "&language=en&page=" + nextPage;
+                            url = "https://newsdata.io/api/1/news?apikey=pub_245202fcd86c96f9e3b071c742384f2e8aef0&qInTitle=" + text+ "&language=en&page=" + nextPage;
                         } else {
-                            url = "https://newsdata.io/api/1/news?apikey=pub_259641873c377e643bcad2a3c456e3eda9486&qInTitle=" + text + "&language=en";
+                            url = "https://newsdata.io/api/1/news?apikey=pub_245202fcd86c96f9e3b071c742384f2e8aef0&qInTitle=" + text + "&language=en";
                         }
                     }
                 }else {
@@ -207,10 +220,10 @@ public class news extends AppCompatActivity {
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int rid = newsno;
         rl.setId(rid);
+        param.topMargin=40;
         newsmap.put(String.valueOf(rid), js);
         rl.setHorizontalGravity(Gravity.CENTER);
         param.bottomMargin = 20;
-        rl.setBackgroundColor(Color.argb(100, 90, 90, 90));
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,14 +240,13 @@ public class news extends AppCompatActivity {
                 }
             }
         });
-        parent.setBackgroundColor(getResources().getColor(R.color.darknavy));
-        rl.setPadding(20, 30, 20, 30);
-
+        parent.setBackgroundColor(getColor(R.color.newscolor));
 
         ImageView img = new ImageView(this);
         RelativeLayout.LayoutParams imageParam = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         imageParam.width = 250;
-        imageParam.height = 250;
+        imageParam.leftMargin=30;
+        imageParam.height = 200;
         imageParam.rightMargin = 30;
         imageParam.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         img.setId(View.generateViewId());
@@ -245,7 +257,11 @@ public class news extends AppCompatActivity {
         t.setText(title);
         RelativeLayout.LayoutParams textviewParam = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         textviewParam.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        textviewParam.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        textviewParam.rightMargin=20;
+        Typeface tf = ResourcesCompat.getFont(getApplicationContext(), R.font.belgrano);
+        t.setTypeface(tf);
+        textviewParam.leftMargin=20;
+        textviewParam.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
         textviewParam.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         textviewParam.addRule(RelativeLayout.RIGHT_OF, img.getId());
         t.setLayoutParams(textviewParam);
@@ -277,6 +293,7 @@ public class news extends AppCompatActivity {
                     public void onSuccess(Location location) {
                         if(location==null){
                             Toast.makeText(news.this, "Location disabled", Toast.LENGTH_SHORT).show();
+                            handleNews(null);
                         }
                         else {
                             latitude = location.getLatitude();
@@ -299,6 +316,7 @@ public class news extends AppCompatActivity {
             public void onSuccess(Location location) {
                 if(location==null){
                     Toast.makeText(news.this, "Location disabled", Toast.LENGTH_SHORT).show();
+                    handleNews(null);
                 }
                 else {
                     latitude = location.getLatitude();
@@ -315,5 +333,14 @@ public class news extends AppCompatActivity {
         });
         locationGranted = TRUE;
     }
+}
+public void handleMenu(View v){
+        CardView cd=findViewById(R.id.menu);
+        menu=!menu;
+        if(menu) {
+            cd.setVisibility(CardView.VISIBLE);
+        }else{
+            cd.setVisibility(CardView.GONE);
+        }
 }
 }

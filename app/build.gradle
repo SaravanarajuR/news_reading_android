@@ -47,6 +47,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'androidx.compose.animation:animation-core:1.1.1'
     testImplementation 'junit:junit:4.13.2'
+    implementation 'io.grpc:grpc-okhttp:1.41.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.41.0'
+    implementation 'io.grpc:grpc-stub:1.41.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

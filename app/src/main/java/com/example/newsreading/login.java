@@ -61,12 +61,12 @@ public class login extends AppCompatActivity {
                     Intent i;
                     DocumentSnapshot res=task.getResult();
                     if(res.exists()) {
-                        i = new Intent(login.this, news.class);
+                        i = new Intent(getApplicationContext(), intro.class);
+                        startActivity(i);
                     }else{
-                        i = new Intent(login.this, chooseInterest.class);
+                        i = new Intent(getApplicationContext(), chooseInterest.class);
+                        startActivity(i);
                     }
-                    startActivity(i);
-                    finish();
                 }
             });
         } else {
@@ -137,15 +137,16 @@ public class login extends AppCompatActivity {
                             dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    Intent i;
                                     DocumentSnapshot res=task.getResult();
-                                    if(res.exists()) {
-                                        i = new Intent(login.this, news.class);
+                                    if(res!=null) {
+                                        Intent i=new Intent(getApplicationContext(), intro.class);
+                                        startActivity(i);
+                                        finish();
                                     }else{
-                                        i = new Intent(login.this, chooseInterest.class);
+                                        Intent i = new Intent(login.this, chooseInterest.class);
+                                        startActivity(i);
+                                        finish();
                                     }
-                                    startActivity(i);
-                                    finish();
                                 }
                             });
                         } else {

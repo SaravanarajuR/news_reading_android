@@ -111,8 +111,9 @@ public class chooseInterest extends AppCompatActivity {
         }
 
     public void redirect(){
-        Intent i=new Intent(getApplicationContext(),news.class);
+        Intent i=new Intent(getApplicationContext(),intro.class);
         startActivity(i);
+        finish();
     }
 
     public void handleFavs(View v){
