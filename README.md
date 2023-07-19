@@ -7,6 +7,8 @@
  5. Newsdata.io API <br>
  6. Search feature <br>
  7. profile view <br>
+ 8. Location based recommendation
 <h1>Future upgrades</h1>
  1. UI Thread bug removal <br>
  2. improving profile viewer <br>
+ 3. payment for premium users
