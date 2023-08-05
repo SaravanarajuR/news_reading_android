@@ -53,14 +53,14 @@ public class login extends AppCompatActivity {
 
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
+        if (user!=null) {
             dr=db.collection("user").document(FirebaseAuth.getInstance().getUid());
             dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     Intent i;
                     DocumentSnapshot res=task.getResult();
-                    if(res.exists()) {
+                    if(res!=null) {
                         i = new Intent(getApplicationContext(), intro.class);
                         startActivity(i);
                     }else{
@@ -138,7 +138,8 @@ public class login extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     DocumentSnapshot res=task.getResult();
-                                    if(res!=null) {
+                                    Log.d("test",res.toString());
+                                    if(res!=null){
                                         Intent i=new Intent(getApplicationContext(), intro.class);
                                         startActivity(i);
                                         finish();

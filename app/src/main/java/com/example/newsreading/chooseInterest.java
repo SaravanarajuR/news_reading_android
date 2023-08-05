@@ -82,21 +82,18 @@ public class chooseInterest extends AppCompatActivity {
                         ArrayList<String> username = new ArrayList<String>();
                         ArrayList<String> userfavs = new ArrayList<String>();
                         userfavs.addAll(favs);
+                        username.add("freemium");
                         if (favs.size() < 2) {
                             Toast.makeText(chooseInterest.this, "Choose atleast 2 favourites", Toast.LENGTH_SHORT).show();
                         } else {
                             username.add(uname.getText().toString());
-                            user.put("uname", username);
                             user.put("favs", userfavs);
-                            db.collection("user").document(mAuth.getUid()).set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            user.put("userdata",username);
+                            DocumentReference dr=db.collection("user").document(mAuth.getUid());
+                            dr.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    data.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                           redirect();
-                                        }
-                                    });
+                                                    redirect();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -110,10 +107,10 @@ public class chooseInterest extends AppCompatActivity {
             });
         }
 
-    public void redirect(){
-        Intent i=new Intent(getApplicationContext(),intro.class);
-        startActivity(i);
-        finish();
+    public void redirect() {
+                Intent i=new Intent(getApplicationContext(),intro.class);
+                startActivity(i);
+                finish();
     }
 
     public void handleFavs(View v){

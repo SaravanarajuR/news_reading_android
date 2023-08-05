@@ -116,7 +116,9 @@ public class news extends AppCompatActivity {
             }
         });
         TextView uname=findViewById(R.id.username);
+        TextView plan=findViewById(R.id.plan);
         uname.setText(getIntent().getStringExtra("uname"));
+        plan.setText(getIntent().getStringExtra("plan"));
         HashMap<String,String> attributes= (HashMap<String, String>) getIntent().getSerializableExtra("urls");
                 int i=0;
                                 for (final Map.Entry<String, String> entry : attributes.entrySet()) {
@@ -147,6 +149,11 @@ public class news extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void handlePremium(View v){
+        Intent i=new Intent(this.getApplicationContext(), premium.class);
+        startActivity(i);
     }
 
     public void handleNews(View v) {
